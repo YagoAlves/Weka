@@ -1211,7 +1211,7 @@ public class TrajectoryMethods {
     	}
 
     }
-	*/
+	
 	public static void main(String[] args) {
 		
 		TrajectoryMethods tm = new TrajectoryMethods();
@@ -1228,5 +1228,5 @@ public class TrajectoryMethods {
 			e.printStackTrace();
 		}
 	
-	}
+	}*/
 }
