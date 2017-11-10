@@ -9,6 +9,9 @@
 package weka.gui.stpm;
 
 import java.util.*;
+
+import org.postgis.PGgeometry;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -1093,7 +1096,7 @@ public class TrajectoryMethods {
 		throws SQLException {
 		
 		int i,j,gidaux,serial_gid=0;	
-		org.postgis.PGgeometry geom;
+		org.postgis.PGgeometry geom /*= new PGgeometry()*/;
 		Statement s=config.conn.createStatement();	
 		String sql = "select "+config.tid+",gid,"+config.time+",the_geom from "+config.table+" where "+config.tid+"="+t.tid+" order by time;";
 		System.out.println("Aplying method smot...\n"+sql);
@@ -1112,8 +1115,9 @@ public class TrajectoryMethods {
 	    	pt.tid=rs.getInt("tid");
 	    	pt.gid=rs.getInt("gid");
 	    	pt.time=rs.getTimestamp(config.time);
+	    	//System.out.println(rs.getObject("the_geom"));
 	    	geom = (org.postgis.PGgeometry) rs.getObject("the_geom");
-	        pt.point = (org.postgis.Point) geom.getGeometry();
+	    	pt.point = (org.postgis.Point) geom.getGeometry();
 	    	
 	    	//get the actual gid/time variables to be tested
 	    	gidaux=pt.gid;
@@ -1165,7 +1169,7 @@ public class TrajectoryMethods {
 	    	stops.addElement(st);//if passes, it's added
 	    }
 	    System.out.println("");	
-	    System.out.println("/aqui/");
+	    //System.out.println("/aqui/");
 	    saveStopsAndMoves2(stops,config.conn,featureType,buffer,0);
 	    rs.close();
 	}
